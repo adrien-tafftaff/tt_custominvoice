@@ -233,26 +233,17 @@ class Tt_custominvoice extends Module
             $this->context->controller->addCSS($this->_path.'views/css/back.css');
         }
     }
-    public function hookactionValidateOrderAfter($params){
-        $id_order = $params['object']->id_order;
-        $id_order_invoice = $params['object']->id;
-        $order_invoice = new OrderInvoice($id_order_invoice);
-        $order = new Order($id_order);
-        $address = new Address($order->id_address_delivery);
-        $country = new Country($address->id_country);
-        $order_invoice->note = $order_invoice->note.Configuration::get('TT_CUSTOMINVOICE_SENTENCE_UK');
-        $order_invoice->update();
-    }
-*/
+    */
     /**
      * Add the CSS & JavaScript files you want to be added on the FO.
      */
+    /*
     public function hookHeader()
     {
         $this->context->controller->addJS($this->_path.'/views/js/front.js');
         $this->context->controller->addCSS($this->_path.'/views/css/front.css');
     }
-
+    */
     public function hookDisplayInvoice($params)
     {
         
