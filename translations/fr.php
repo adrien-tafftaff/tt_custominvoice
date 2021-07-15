@@ -11,8 +11,8 @@ $_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_3acb228e77768f2611ae59e
 $_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_c390087dcb976888932fcd9850c7df92'] = 'Contenu du tableau ou note';
 $_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_a8db67f9181b1a449d5085d6e550210e'] = 'Texte Libre';
 $_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_8d9bf420b7b9e6e3c5ff99278a178919'] = 'Pays sur lequel afficher';
-$_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_4d93089f633a2afb4311205b1c25f898'] = 'Le titre ne sera pas utilisé';
-$_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_48d7fcad15ea82967eac2680760f6a8a'] = 'Ajouter uniquemebnt le texte en note';
+$_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_4d93089f633a2afb4311205b1c25f898'] = 'Il ne sera plus possible de retirer la note et seul le text sera utilisé';
+$_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_48d7fcad15ea82967eac2680760f6a8a'] = 'Ajouter le texte en note';
 $_MODULE['<{tt_custominvoice}prestashop>tt_custominvoice_c9cc8cce247e49bae79f15173ce97354'] = 'Sauvegarder';
 $_MODULE['<{tt_custominvoice}prestashop>configure_2e03bca91fe62c760887f77dbec51270'] = 'Personnalisation de facture';
 $_MODULE['<{tt_custominvoice}prestashop>configure_50d1aaaac55b3ad43d2774bbfd3e19bc'] = 'Ajouter du texte à vos factures';
