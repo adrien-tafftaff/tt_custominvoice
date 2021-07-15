@@ -2,7 +2,7 @@
 <module>
 	<name>tt_custominvoice</name>
 	<displayName><![CDATA[Invoice Custom ]]></displayName>
-	<version><![CDATA[1.0.1]]></version>
+	<version><![CDATA[1.1.1]]></version>
 	<description><![CDATA[Add content on your invoice with some conditions]]></description>
 	<author><![CDATA[Adrien THIERRY - tafftaff]]></author>
 	<tab><![CDATA[billing_invoicing]]></tab>
