@@ -46,12 +46,7 @@ class Tt_custominvoice extends Module
     {
         Configuration::updateValue('TT_CUSTOMINVOICE_SENTENCE_UK', false);
 
-
         return parent::install() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader') &&
-            $this->registerHook('displayInvoice') &&
-            $this->registerHook('displayOrderDetail') &&
             $this->registerHook('displayPDFInvoice');
     }
 
@@ -61,8 +56,6 @@ class Tt_custominvoice extends Module
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_COUNTRY');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_MODE');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_TITLE');
-
-
         return parent::uninstall();
     }
 
@@ -223,37 +216,6 @@ class Tt_custominvoice extends Module
         }
     }
 
-    /**
-    * Add the CSS & JavaScript files you want to be loaded in the BO.
-    */
-    /*public function hookBackOfficeHeader()
-    {
-        if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
-        }
-    }
-    */
-    /**
-     * Add the CSS & JavaScript files you want to be added on the FO.
-     */
-    /*
-    public function hookHeader()
-    {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/front.css');
-    }
-    */
-    public function hookDisplayInvoice($params)
-    {
-        
-    }
-
-    public function hookDisplayOrderDetail($params)
-    {
-
-    }
-
     public function hookDisplayPDFInvoice($params)
     {
 
@@ -279,13 +241,12 @@ class Tt_custominvoice extends Module
             else{ // on le met sur le hook
                 $title = Configuration::get('TT_CUSTOMINVOICE_SENTENCE_TITLE');
                 $text = Configuration::get('TT_CUSTOMINVOICE_SENTENCE_UK');
-                if (in_array($country->iso_code,array('US','UK')) ){
-                    $this->context->smarty->assign([
+                $this->context->smarty->assign([
                     'title' => $title,
                     'text' => $text,
                     ]);
-                    return $this->display(__FILE__, 'hookDisplayPDFInvoice.tpl');
-                }
+                return $this->display(__FILE__, 'hookDisplayPDFInvoice.tpl');
+                
             }
         }
         else{
