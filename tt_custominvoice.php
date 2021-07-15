@@ -56,6 +56,8 @@ class Tt_custominvoice extends Module
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_COUNTRY');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_MODE');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_TITLE');
+        Configuration::deleteByName('TT_CUSTOMINVOICE_PRODUCT_TAXE_ZERO');
+        TT_CUSTOMINVOICE_PRODUCT_TAXE_ZERO
         return parent::uninstall();
     }
 
@@ -181,6 +183,16 @@ class Tt_custominvoice extends Module
                         'is_bool' => true,
                         'values' => $switch
                     ),
+                     array(
+                        'col' => 3,
+                        'type' => 'switch',
+                        'prefix' => '<i class="icon icon-envelope"></i>',
+                        'desc' => $this->l('Activer uniquement si les taxes produits sont égales à zéro '),
+                        'name' => 'TT_CUSTOMINVOICE_PRODUCT_TAXE_ZERO',
+                        'label' => $this->l('Products taxes = 0'),
+                        'is_bool' => true,
+                        'values' => $switch
+                    ),
                 ),
 
 
@@ -201,6 +213,7 @@ class Tt_custominvoice extends Module
             'TT_CUSTOMINVOICE_SENTENCE_COUNTRY' => Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY'),
             'TT_CUSTOMINVOICE_SENTENCE_MODE' => Configuration::get('TT_CUSTOMINVOICE_SENTENCE_MODE'),
             'TT_CUSTOMINVOICE_SENTENCE_TITLE' => Configuration::get('TT_CUSTOMINVOICE_SENTENCE_TITLE'),
+            'TT_CUSTOMINVOICE_PRODUCT_TAXE_ZERO' => Configuration::get('TT_CUSTOMINVOICE_PRODUCT_TAXE_ZERO'),
         );
     }
 
@@ -225,8 +238,11 @@ class Tt_custominvoice extends Module
         $order = new Order($id_order);
         $address = new Address($order->id_address_delivery);
         $country = new Country($address->id_country);
-
-        if ($country->iso_code == Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY')){ // On vérifie le pays
+        $product_taxes = 0;
+        foreach ($order_invoice->getProductTaxesBreakdown($order) as $details) {
+            $product_taxes += $details['total_amount'];
+        }
+        if ($country->iso_code == Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY') && $product_taxes == 0){ // On vérifie le pays
             if (Configuration::get('TT_CUSTOMINVOICE_SENTENCE_MODE')){ // ON ajoute la note
                 if (false === stristr($order_invoice->note,Configuration::get('TT_CUSTOMINVOICE_SENTENCE_UK'))){
                     $order_invoice->note = $order_invoice->note.'<br>'.Configuration::get('TT_CUSTOMINVOICE_SENTENCE_UK');
