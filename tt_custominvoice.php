@@ -3,9 +3,9 @@
  * @category    Module / customizations
  * @author      Adrien THIERRY www.tafftaff.fr
  * @copyright   2021 Adrien THIERRY
- * @version     1.0
+ * @version     1.1.1
  * @link        https://www.tafftaff.fr
- * @since       File available since Release 1.0
+ * @since       File available since Release 1.1.0
 */
 
 if (!defined('_PS_VERSION_')) {
@@ -20,7 +20,7 @@ class Tt_custominvoice extends Module
     {
         $this->name = 'tt_custominvoice';
         $this->tab = 'billing_invoicing';
-        $this->version = '1.0.1';
+        $this->version = '1.1.1';
         $this->author = 'Adrien THIERRY - tafftaff';
         $this->need_instance = 0;
 
