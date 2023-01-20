@@ -279,13 +279,12 @@ class Tt_custominvoice extends Module
             else{ // on le met sur le hook
                 $title = Configuration::get('TT_CUSTOMINVOICE_SENTENCE_TITLE');
                 $text = Configuration::get('TT_CUSTOMINVOICE_SENTENCE_UK');
-                if (in_array($country->iso_code,array('US','UK')) ){
-                    $this->context->smarty->assign([
-                    'title' => $title,
-                    'text' => $text,
-                    ]);
-                    return $this->display(__FILE__, 'hookDisplayPDFInvoice.tpl');
-                }
+                $this->context->smarty->assign([
+                'title' => $title,
+                'text' => $text,
+                ]);
+                return $this->display(__FILE__, 'hookDisplayPDFInvoice.tpl');
+                
             }
         }
         else{
