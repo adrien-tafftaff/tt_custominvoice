@@ -230,8 +230,6 @@ class Tt_custominvoice extends Module
         $order = new Order($id_order);
         $address = new Address($order->id_address_delivery);
         $country = new Country($address->id_country);
-        $id_lang_hs_code = DB::getInstance()->ExecuteS('SELECT id_lang FROM '._DB_PREFIX_.'lang WHERE iso_code = '.Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY'));
-
         $products = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
         SELECT od.product_name,od.product_reference,p.hscode
         FROM `' . _DB_PREFIX_ . 'order_detail` od
@@ -269,7 +267,7 @@ class Tt_custominvoice extends Module
     }
     public function hookDisplayAdminProductsMainStepLeftColumnMiddle($params)
     {
-        $id = $params['id_product'];
+        $id = (int)$params['id_product'];
         if (empty($id)) {
             return '';
         }
@@ -280,7 +278,7 @@ class Tt_custominvoice extends Module
 
     public function hookActionProductUpdate($params)
     {
-        $id = Tools::getValue('id_product');
+        $id = (int)Tools::getValue('id_product');
         $product = new Product($id);
         if((int)Tools::getValue('hs_code') != $product->hscode) {
             $product->hscode = (int)Tools::getValue('hs_code');
