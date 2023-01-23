@@ -45,18 +45,16 @@ class Tt_custominvoice extends Module
     public function install()
     {
         Configuration::updateValue('TT_CUSTOMINVOICE_SENTENCE_UK', false);
-
+        include(dirname(__FILE__) . '/sql/install.php');
 
         return parent::install() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader') &&
-            $this->registerHook('displayInvoice') &&
-            $this->registerHook('displayOrderDetail') &&
-            $this->registerHook('displayPDFInvoice');
+            $this->registerHook('displayPDFInvoice') &&
+            $this->registerHook('actionProductUpdate');
     }
 
     public function uninstall()
     {
+        include(dirname(__FILE__) . '/sql/uninstall.php');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_UK');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_COUNTRY');
         Configuration::deleteByName('TT_CUSTOMINVOICE_SENTENCE_MODE');
@@ -223,37 +221,6 @@ class Tt_custominvoice extends Module
         }
     }
 
-    /**
-    * Add the CSS & JavaScript files you want to be loaded in the BO.
-    */
-    /*public function hookBackOfficeHeader()
-    {
-        if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
-        }
-    }
-    */
-    /**
-     * Add the CSS & JavaScript files you want to be added on the FO.
-     */
-    /*
-    public function hookHeader()
-    {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/front.css');
-    }
-    */
-    public function hookDisplayInvoice($params)
-    {
-        
-    }
-
-    public function hookDisplayOrderDetail($params)
-    {
-
-    }
-
     public function hookDisplayPDFInvoice($params)
     {
 
@@ -290,5 +257,25 @@ class Tt_custominvoice extends Module
         else{
             return;
         } 
+    }
+    public function hookDisplayAdminProductsMainStepLeftColumnMiddle($params)
+    {
+        $id = $params['id_product'];
+        if (empty($id)) {
+            return '';
+        }
+        $product = new Product($id);
+        $this->context->smarty->assign('hscode', $product->hscode);
+        return $this->display(__FILE__, 'views/templates/admin/create.tpl');
+    }
+
+    public function hookActionProductUpdate($params)
+    {
+        $id = Tools::getValue('id_product');
+        $product = new Product($id);
+        if((int)Tools::getValue('hs_code') != $product->hscode) {
+            $product->hscode = (int)Tools::getValue('hs_code');
+            $product->save();
+        }
     }
 }
