@@ -230,6 +230,14 @@ class Tt_custominvoice extends Module
         $order = new Order($id_order);
         $address = new Address($order->id_address_delivery);
         $country = new Country($address->id_country);
+        $id_lang_hs_code = DB::getInstance()->ExecuteS('SELECT id_lang FROM '._DB_PREFIX_.'lang WHERE iso_code = '.Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY'));
+
+        $products = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+        SELECT od.product_name,od.product_reference,p.hscode
+        FROM `' . _DB_PREFIX_ . 'order_detail` od
+        LEFT JOIN `' . _DB_PREFIX_ . 'product` p ON (p.id_product = od.product_id)
+        WHERE od.`id_order` = ' . (int) $order->id);
+
 
         if ($country->iso_code == Configuration::get('TT_CUSTOMINVOICE_SENTENCE_COUNTRY')){ // On vérifie le pays
             if (Configuration::get('TT_CUSTOMINVOICE_SENTENCE_MODE')){ // ON ajoute la note
@@ -249,6 +257,7 @@ class Tt_custominvoice extends Module
                 $this->context->smarty->assign([
                 'title' => $title,
                 'text' => $text,
+                'productsdetails' => $products
                 ]);
                 return $this->display(__FILE__, 'hookDisplayPDFInvoice.tpl');
                 

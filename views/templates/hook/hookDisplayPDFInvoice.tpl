@@ -23,4 +23,23 @@
 		</table>
 	</td>
 </tr>
+
+</table>
+<table width="100%" cellpadding="4" cellspacing="0">
+	<thead>
+		<tr>
+			<th class="product header small">{l s='Produit' d='Shop.Pdf' pdf='true'}</th>
+			<th class="product header small center">{l s='Réference' d='Shop.Pdf' pdf='true'}</th>
+			<th class="product header small center">{l s='Code douane' d='Shop.Pdf' pdf='true'}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach $productsdetails as $product}
+		<tr class="product">
+			<td>{$product.product_name}</td>
+			<td class="center">{$product.product_reference}</td>
+			<td class="center">{$product.hscode}</td>
+		</tr>
+		{/foreach}
+	</tbody>
 </table>
